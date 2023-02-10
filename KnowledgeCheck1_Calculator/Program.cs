@@ -10,86 +10,57 @@ namespace KnowledgeCheck1_Calculator
     {
         static void Main(string[] args)
         {
-
-            Console.WriteLine("Hello. Press 1 for addition, 2 for subtraction, 3 for multiplication, and 4 for division");
-
-            var input = Console.ReadLine();
-            var calculator = new Calculator();
-
-            switch (input)
-            {
-                case "1":
-                    Console.WriteLine("Enter 2 integers to add");
-                    var addNumber1 = Console.ReadLine();
-                    var addNumber2 = Console.ReadLine();
-
-                    if (int.TryParse(addNumber1, out int addNumOne) && int.TryParse(addNumber2, out int addNumTwo))
-                    {
-                        Console.Write($"{addNumber1} + {addNumber2} = ");
-                        Console.Write(calculator.Add(addNumOne, addNumTwo));
-                    }
-                    else
-                    {
-                        Console.WriteLine("One or more of the numbers is not an int");
-                    }
-                    break;
-
-                case "2":
-                    Console.WriteLine("Enter 2 integers to subtract");
-                    var subtractNumber1 = Console.ReadLine();
-                    var subtractNumber2 = Console.ReadLine();
-
-                    if (int.TryParse(subtractNumber1, out int subNumOne) && int.TryParse(subtractNumber2, out int subNumTwo))
-                    {
-                        Console.Write($"{subtractNumber1} - {subtractNumber2} = ");
-                        Console.Write(calculator.Subtract(subNumOne, subNumTwo));
-                    }
-                    else
-                    {
-                        Console.WriteLine("One or more of the numbers is not an int");
-                    }
-                    break;
-
-                case "3":
-                    // Add code here
-                    Console.WriteLine("Enter 2 integers to multiply");
-                    var multiplyNumber1 = Console.ReadLine();
-                    var multiplyNumber2 = Console.ReadLine();
-
-                    if (int.TryParse(multiplyNumber1, out int multNumOne) && int.TryParse(multiplyNumber2, out int multNumTwo))
-                    {
-                        Console.Write($"{multiplyNumber1} x {multiplyNumber2} = ");
-                        Console.Write(calculator.Multiply(multNumOne, multNumTwo));
-                    }
-                    else
-                    {
-                        Console.WriteLine("One or more of the numbers is not an int");
-                    }
-                    break;
-
-                case "4":
-                    Console.WriteLine("Enter 2 integers to divide");
-                    var divideNumber1 = Console.ReadLine();
-                    var divideNumber2 = Console.ReadLine();
-
-                    if (double.TryParse(divideNumber1, out double divNumOne) && double.TryParse(divideNumber2, out double divNumTwo))
-                    {
-                        Console.Write($"{divideNumber1} / {divideNumber2} = ");
-                        Console.Write(calculator.Divide(divNumOne, divNumTwo));
-                    }
-                    else
-                    {
-                        Console.WriteLine("One or more of the numbers is not an int");
-                    }
-                    break;
-
-                default:
-                    Console.WriteLine("Unknown input");
-                    break;
-            }
+            Console.WriteLine("Welcome to Calculator 2!");
             Console.WriteLine();
-            Console.WriteLine("Press Enter to exit.");
-            Console.ReadLine();
+            string input;
+            do
+            {
+                Console.Write("Enter '1' for addition, '2' for subtraction, '3' for multiplication, '4' for division, and 'Q' to quit: ");
+                input = Console.ReadLine().ToUpper();
+                var calculator = new Calculator();
+                switch (input)
+                {
+                    case "1":
+                        var addNumber1 = GetInteger("first", "addition");
+                        var addNumber2 = GetInteger("second", "addition");
+                        Console.Write($"{addNumber1} + {addNumber2} = ");
+                        Console.WriteLine(calculator.Add(addNumber1, addNumber2));
+                        break;
+                    case "2":
+                        var subtractNumber1 = GetInteger("first", "subtraction");
+                        var subtractNumber2 = GetInteger("second", "subtraction");
+                        Console.Write($"{subtractNumber1} - {subtractNumber2} = ");
+                        Console.WriteLine(calculator.Subtract(subtractNumber1, subtractNumber2));
+                        break;
+                    case "3":
+                        var multiplyNumber1 = GetInteger("first", "multiplication");
+                        var multiplyNumber2 = GetInteger("second", "multiplication");
+                        Console.Write($"{multiplyNumber1} x {multiplyNumber2} = ");
+                        Console.WriteLine(calculator.Multiply(multiplyNumber1, multiplyNumber2));
+                        break;
+                    case "4":
+                        var divideNumber1 = (double)GetInteger("first", "division");
+                        var divideNumber2 = (double)GetInteger("second", "division");
+                        Console.Write($"{divideNumber1} / {divideNumber2} = ");
+                        Console.WriteLine(calculator.Divide(divideNumber1, divideNumber2));
+                        break;
+                    case "Q":
+                        Console.WriteLine("Calc-You-Later :P");
+                        break;
+                    default:
+                        Console.WriteLine("Unknown input");
+                        break;
+                }
+            } while (input != "Q");       
+        }
+
+        static int GetInteger(string orderOfNumbers, string operation)
+        {
+            Console.Write($"Enter the {orderOfNumbers} integer for {operation}: ");
+            int number;
+            while (!Int32.TryParse(Console.ReadLine(), out number))
+                Console.Write("Please enter an integer: ");
+            return number;
         }
     }
 }
